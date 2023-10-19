@@ -1,0 +1,116 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.headerContainer {
+    width: 100vw;
+    height: 65px;
+    background: linear-gradient(180deg, #070366, #07036678 47%);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: fixed;
+    z-index: 1;
+}
+.lnuLogo {
+    width: 55px;
+    height: 55px;
+    margin: 0px 0px 0px 10px;
+}
+.lnuTitle {
+    width: 130px;
+    height: 65px;
+    margin: 0px 0px 0px 10px;
+}
+.headerTitle {
+    font-weight: bold;
+    margin: 0px 0px 0px 150px;    
+}
+.mainContainer {
+    display: inline-flex;
+}
+.navContainer {
+    width: 250px;
+    height: 538px;
+    background: #D9D9D9;
+    position:fixed;
+    display: flex;
+    flex-direction: column;
+    margin: 65px 0px 0px 0px;
+    z-index: 1;
+}
+.navHeader {
+    font-size: 20px;
+    font-weight: bold;
+    padding: 30px 0px 0px 15px;
+}
+.rfidtxtBox {
+    align-self: center;
+    margin-top: 30px;
+}
+.rfidtxtBox input {
+    text-indent: 10px;
+    height: 30px;
+    width: 180px;
+    border-radius: 20px;
+    border: 1px solid #000;
+}
+a {
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+    padding: 10px 0px 0px 0px;
+}
+.attendanceContainer {
+    width: 1030px;
+    height: 538px;
+}
+table {
+    width: 995px;
+    border-collapse: collapse;
+    text-align: center;
+    margin: 170px 0px 0px 260px;
+}
+table th:first-of-type {
+    border-top-left-radius: 20px;
+}
+table th:last-of-type {
+    border-top-right-radius: 20px;
+}
+table tbody tr:last-of-type td:first-of-type {
+    border-bottom-left-radius: 20px;
+}
+table tbody tr:last-of-type td:last-of-type {
+    border-bottom-right-radius: 20px;
+}
+.attendanceHeader {
+    font-weight: bold;
+    font-size: 30px;
+    margin: 90px 0px 0px 290px;
+    z-index: 0;
+}
+.attendanceheaderContainer {
+    position: fixed;
+    width: 100vw;
+    height: 170px;
+    background: #fff;
+}
+thead {
+    border: 1px solid #000;
+}
+th {
+    height: 50px;
+    background: #585454;
+}
+tr {
+    height: 50px;
+}
+td {
+    background: #ebe5e5;
+}
+.rfidtxtBox {
+    margin-top: 30px;
+    width: 170px;
+    height: 25px;
+}
