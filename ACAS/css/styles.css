@@ -1,0 +1,225 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.indexBody {
+    background: url('../images/ACAS background.png');
+    background-size: cover;
+    background-attachment: fixed;
+}
+.headerContainer, .eventheaderContainer {
+    width: 100vw;
+    height: 9%;
+    background: #070366;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: fixed;
+    z-index: 1;
+}
+
+.eventheaderContainer nav {
+    width: 30%;
+    margin-left: 65%;
+}
+.headerContainer nav {
+    width: 30%;
+    margin-left: 55%;
+}
+.headerContainer nav a, .eventheaderContainer nav a {
+    margin-left: 10%;
+}
+.acasLogo {
+    width: 20%;
+    height: 550%;
+    margin: 1% 0% 0% 0%;
+}
+.headerTitle {
+    font-weight: bold;
+    margin: 0px 0px 0px 150px;    
+}
+.mainContainer {
+    display: inline-flex;
+}
+.exportBtn {
+    appearance: none;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 16px;
+}
+.navContainer {
+    width: 20%;
+    height: 100%;
+    background: #D9D9D9;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    margin: 2.9% 0% 0% 0%;
+    z-index: 1;
+}
+.navHeader {
+    font-size: 20px;
+    font-weight: bold;
+    padding: 30px 0px 0px 15px;
+}
+form p {
+    font-weight: 700;
+    font-size: 20px;
+}
+.rfidtxtBox {
+    align-self: center;
+    margin-top: 30px;
+}
+.rfidtxtBox input {
+    text-indent: 10px;
+    height: 30px;
+    width: 180px;
+    border-radius: 20px;
+    border: 1px solid #000;
+}
+a {
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: bold;
+}
+.attendanceContainer {
+    width: 78%;
+    height: 80%;
+    top: 15%;
+    left: 21%;
+    position: absolute;
+    z-index: 0;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+table caption {
+    font-size: 20px;
+    font-weight: bold;
+}
+table th:first-of-type {
+    border-top-left-radius: 20px;
+}
+table th:last-of-type {
+    border-top-right-radius: 20px;
+}
+table tbody tr:last-of-type td:first-of-type {
+    border-bottom-left-radius: 20px;
+}
+table tbody tr:last-of-type td:last-of-type {
+    border-bottom-right-radius: 20px;
+}
+th {
+    height: 50px;
+    background: #070366;
+    color: #ffffff;
+    position: sticky;
+}
+tr {
+    height: 50px;
+}
+tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+tr:nth-child(even) {
+    background-color: #d4c4c4;
+}
+td {
+    font-weight: 500;
+}
+.rfidtxtBox {
+    margin-top: 30px;
+    width: 170px;
+    height: 25px;
+}
+.newattendanceForm {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    height: 100vh;
+    width: 50vw;
+    background: #070366;
+}
+select {
+    margin-top: 10%;
+    width: 110%;
+    height: 30px;
+    border-radius: 20px;
+    text-indent: 10px;
+}
+.eventList input {
+    margin-top: 10%;
+    margin-left: 4%;
+    height: 35px;
+    background-color: #070366;
+    color: #ffffff;
+    font-weight: 600;
+    border-radius: 20px;
+    width: 100%;
+    border: none;
+}
+.eventList input:hover {
+    background-color: #241ed3;
+}
+.eventContainer {
+    width: 60%;
+    height: 80%;
+    top: 15%;
+    left: 30%;
+    position: absolute;
+    z-index: 0;
+}
+.eventForm {
+    width: 50%;
+    height: 50%;
+    background: #ffffff;
+    margin: 10% 0% 0% 23%;
+    text-align: center;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.eventForm p {
+    font-size: 20px;
+    font-weight: 700;
+}
+.eventForm form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.eventForm input {
+    margin-top: 3%;
+}
+.eventForm input[type = "text"], .eventForm input[type = "date"] {
+    height: 30px;
+    width: 50%;
+    border-radius: 20px;
+    border: none;
+    background: #d4d0d0;
+}
+.eventForm input[type = "text"] {
+    text-indent: 10px;
+}
+.eventForm input[type = "date"] {
+    text-indent: 5px;
+}
+.eventForm input[type = "submit"] {
+    margin-top: 5%;
+    width: 50%;
+    height: 30px;
+    border-radius: 20px;
+    border: none;
+    background: rgb(91, 240, 80);
+    font-weight: 700;
+}
+.eventForm input[type = "submit"]:hover {
+    background: rgb(142, 227, 136);
+}
