@@ -9,5 +9,3 @@
             echo '<option value = "'. $eventname .'">'. $eventname .'</option>';
         }
     }
-
-?>

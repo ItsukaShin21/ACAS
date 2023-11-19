@@ -1,8 +1,15 @@
 <?php
+    session_start(); // Start the session
+
+    if (!isset($_SESSION['rfiduid'])) {
+        header("Location: loginPage.php");
+        exit();
+    }
+    
     require_once('dbconnection.php');
 ?>
 <!DOCTYPE html>
-<html lang = "en">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,7 +25,7 @@
         <nav>
             <a href="eventPage.php">Event</a>
             <button class = "exportBtn" onclick = "exportToExcel('attendanceTable')">Export</button>
-            <a href="">Log out</a>
+            <a href="logout.php">Log out</a>
         </nav>
     </div>
     <div class = "mainContainer">

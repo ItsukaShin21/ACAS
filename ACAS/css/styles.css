@@ -50,6 +50,7 @@
     color: #ffffff;
     font-weight: bold;
     font-size: 16px;
+    margin: 0% 0% 0% 10%;
 }
 .navContainer {
     width: 20%;
@@ -177,9 +178,9 @@ select {
 }
 .eventForm {
     width: 50%;
-    height: 50%;
+    height: 60%;
     background: #ffffff;
-    margin: 10% 0% 0% 23%;
+    margin: 10% auto; /* Center the form horizontally */
     text-align: center;
     border-radius: 20px;
     display: flex;
@@ -190,17 +191,22 @@ select {
     font-size: 20px;
     font-weight: 700;
 }
-.eventForm form {
+.eventForm div {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    justify-content: center;
 }
-.eventForm input {
-    margin-top: 3%;
+.eventForm label {
+    margin-top: 3%; /* Adjust the spacing between label and input */
+    width: 30%; /* Adjust the width as needed */
+    text-align: left; /* Align the text to the right for better visual alignment */
+    font-weight: 500;
 }
-.eventForm input[type = "text"], .eventForm input[type = "date"] {
+.eventForm input[type="text"],
+.eventForm input[type="date"],
+.eventForm input[type="time"] {
+    margin-top: 3%; /* Adjust the spacing between label and input */
     height: 30px;
-    width: 50%;
+    width: 50%; /* Adjust the width as needed */
     border-radius: 20px;
     border: none;
     background: #d4d0d0;
@@ -211,15 +217,73 @@ select {
 .eventForm input[type = "date"] {
     text-indent: 5px;
 }
+.eventForm input[type = "time"] {
+    text-indent: 5px;
+}
 .eventForm input[type = "submit"] {
     margin-top: 5%;
-    width: 50%;
+    width: 37%;
     height: 30px;
     border-radius: 20px;
     border: none;
     background: rgb(91, 240, 80);
     font-weight: 700;
 }
+.eventForm input[type = "submit"]:nth-child(1) {
+    margin-right: 5%;
+}
 .eventForm input[type = "submit"]:hover {
     background: rgb(142, 227, 136);
+}
+.loginForm {
+    width: 30%;
+    height: 40%;
+    background: #ffffff;
+    margin: 10% auto; /* Center the form horizontally */
+    text-align: center;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.loginForm form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.loginForm input[type="password"] {
+    margin-top: 3%; /* Adjust the spacing between label and input */
+    height: 30px;
+    width: 50%; /* Adjust the width as needed */
+    border-radius: 20px;
+    border: none;
+    background: #d4d0d0;
+    text-indent: 10px;
+}
+
+.loginForm input[type="submit"] {
+    margin-top: 5%;
+    width: 37%;
+    height: 30px;
+    border-radius: 20px;
+    border: none;
+    background: rgb(91, 240, 80);
+    font-weight: 700;
+}
+
+.loginForm p {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.loginForm input[type = "submit"]:hover {
+    background: rgb(142, 227, 136);
+}
+
+.mainSection {
+    display: flex;
+    height: 100vh;
+    align-items: center;
 }

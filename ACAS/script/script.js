@@ -5,23 +5,23 @@ setInterval(keepFocus, 100);
 
 function storeData() {
     $(document).ready(function() {
-        $('#rfid').on('change', function() {
+        $('#rfid').on('input', function() {
             let rfidData = $(this).val();
-
-                // Use jQuery AJAX
-                $.ajax({
-                    type: 'POST',
-                    url: 'index.php',
-                    data: { rfid: rfidData },
-                    success: function(response) {
-                        location.reload();
-                    },
-                });
+            
+                // Use jQuery AJAX with a slight delay to account for paste operations
+                setTimeout(function() {
+                    $.ajax({
+                        type: 'POST',
+                        url: 'index.php',
+                        data: { rfid: rfidData },
+                        success: function(response) {
+                            location.reload();
+                        },
+                    });
+                }, 100);
         });
     });
 }
-
-
 
 function exportToExcel(attendanceTable) {
     // Get the table data
@@ -35,14 +35,45 @@ function exportToExcel(attendanceTable) {
             return cell.innerText;
         });
     });
- 
-    // Create a new workbook and a worksheet from the data
+
+    // Group data by program
+    var groupedData = {};
+    data.forEach(function(row) {
+        var program = row[headers.indexOf('Program')];
+        if (!groupedData[program]) {
+            groupedData[program] = [];
+        }
+        groupedData[program].push(row);
+    });
+
+    // Create a new workbook
     var wb = XLSX.utils.book_new();
-    var ws = XLSX.utils.aoa_to_sheet([headers].concat(data));
- 
-    // Append the worksheet to the workbook
-    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
- 
+
+    // Create worksheets for each program
+    Object.keys(groupedData).forEach(function(program) {
+        var wsData = [headers].concat(groupedData[program]);
+        var ws = XLSX.utils.aoa_to_sheet(wsData);
+        XLSX.utils.book_append_sheet(wb, ws, program);
+    });
+
     // Write the workbook to an Excel file
     XLSX.writeFile(wb, 'exported_table.xlsx');
- }
+}
+
+
+ $(document).ready(function() {
+    // Listen for the change event on the eventname select element
+    $('#eventname').change(function() {
+        // Get the selected event name
+        var selectedEvent = $(this).val();
+
+        // Use AJAX to send a request to the server
+        $.ajax({
+            type: 'POST',
+            url: 'eventidFetcher.php',
+            data: { eventname: selectedEvent },
+            success: function(data) {
+            },
+        });
+    });
+});
