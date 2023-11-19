@@ -1,27 +1,7 @@
 function keepFocus() {
-    $("#rfid").focus();
+    $("#rfiduid").focus();
 }
 setInterval(keepFocus, 100);
-
-function storeData() {
-    $(document).ready(function() {
-        $('#rfid').on('input', function() {
-            let rfidData = $(this).val();
-            
-                // Use jQuery AJAX with a slight delay to account for paste operations
-                setTimeout(function() {
-                    $.ajax({
-                        type: 'POST',
-                        url: 'index.php',
-                        data: { rfid: rfidData },
-                        success: function(response) {
-                            location.reload();
-                        },
-                    });
-                }, 100);
-        });
-    });
-}
 
 function exportToExcel(attendanceTable) {
     // Get the table data
@@ -35,7 +15,6 @@ function exportToExcel(attendanceTable) {
             return cell.innerText;
         });
     });
-
     // Group data by program
     var groupedData = {};
     data.forEach(function(row) {
@@ -57,9 +36,8 @@ function exportToExcel(attendanceTable) {
     });
 
     // Write the workbook to an Excel file
-    XLSX.writeFile(wb, 'exported_table.xlsx');
+    XLSX.writeFile(wb, 'attendance.xlsx');
 }
-
 
  $(document).ready(function() {
     // Listen for the change event on the eventname select element
@@ -75,5 +53,20 @@ function exportToExcel(attendanceTable) {
             success: function(data) {
             },
         });
+    });
+});
+
+$(document).ready(function() {
+    // Iterate over each td element in the table
+    $('table td').each(function() {
+        // Get the text content of the current td
+        let status = $(this).text().trim();
+
+        // Add a class based on the status
+        if (status === 'ABSENT') {
+            $(this).addClass('absent');
+        } else if (status === 'PRESENT') {
+            $(this).addClass('present');
+        }
     });
 });

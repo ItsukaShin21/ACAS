@@ -7,8 +7,6 @@ if(isset($_POST['selectEvent'])) {
     $sql = "SELECT * FROM attendancerecord WHERE eventname = '$eventname'";
     $result = $connection->query($sql);
 
-    $url = "index.php?eventname=$eventname";
-    header("Location: $url");
-    exit();
+    header("Location: attendance.php?eventname=$eventname");
 }
 ?>

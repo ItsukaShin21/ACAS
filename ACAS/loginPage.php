@@ -52,8 +52,8 @@
                     }
                 ?>
                 <form method = "POST">
-                    <input type = "password" name = "rfid" placeholder = "RFID" id = "eventName" value = "<?php echo $rfid; ?>" required>
-                    <input type = "password" name = "password" placeholder = "Password" id = "eventtimeEnd" value = "<?php echo $password; ?>" required>
+                    <input type = "password" name = "rfid" placeholder = "RFID" id = "rfid" value = "<?php echo $rfid; ?>" required>
+                    <input type = "password" name = "password" placeholder = "Password" id = "password" value = "<?php echo $password; ?>" required>
                     <input type = "submit" id = "login" name = "login" value = "LOGIN">
                 </form>
             </div>

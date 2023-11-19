@@ -52,7 +52,7 @@
                         </table>';
                     }
                     else {
-                        echo '<h1 style = "text-align: center;">No record</h1>';
+                        echo '<div class = "norecordDisplay"><p>No record</p></div>';
             }
         }
 ?>

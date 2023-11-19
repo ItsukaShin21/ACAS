@@ -287,3 +287,48 @@ select {
     height: 100vh;
     align-items: center;
 }
+
+td.absent {
+    color: rgb(255, 0, 0);
+}
+
+td.present {
+    color: rgb(3, 107, 3);
+}
+.norecordDisplay {
+    text-align: center; 
+    font-size: 20px; 
+    font-weight: bold; 
+    background: #fff;
+    width: 50%;
+    height: 35px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+    margin-left: 25%;
+}
+.eventInfo {
+    background: #b8b4b4;
+    width: 80%;
+    height: 37%;
+    text-align: center;
+    margin: 15% 0% 0% 9%;
+    border-radius: 20px;
+}
+.eventInfo h4 {
+    margin: 0% 0% 3% 0%;
+    background: #070366;
+    height: 30px;
+    color: #fff;
+    border-radius: 20px 20px 0px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.eventInfo p:nth-of-type(odd) {
+    font-weight: bold;
+    margin-bottom: 1%;
+}

@@ -1,8 +1,8 @@
 <?php
 require_once('dbconnection.php');
 
-if (isset($_POST['rfid']) && isset($_GET['eventname'])) {
-    $rfidData = mysqli_real_escape_string($connection, $_POST['rfid']); // Use prepared statements
+if (isset($_POST['rfiduid']) && isset($_GET['eventname'])) {
+    $rfidData = $_POST['rfiduid'];
     $eventname = mysqli_real_escape_string($connection, $_GET['eventname']);
 
     // Check if there's an existing record with timein
@@ -17,7 +17,7 @@ if (isset($_POST['rfid']) && isset($_GET['eventname'])) {
         $sqlqueryAdd = "INSERT INTO attendancerecord (eventname, studentid, timein, status)
                         SELECT  '$eventname' AS eventname, studentid, TIME_FORMAT(NOW(), '%h:%i %p') AS formatted_time, 'ABSENT' AS status
                         FROM students
-                        WHERE rfiduid = '$rfidData'";
+                        WHERE rfiduid = '$rfidData' OR studentid = '$rfidData'";
 
         if (!$connection->query($sqlqueryAdd)) {
             die("Error adding attendance record: " . $connection->error);
@@ -26,7 +26,7 @@ if (isset($_POST['rfid']) && isset($_GET['eventname'])) {
         // Student has timein but no timeout, so insert a new timeout
         $sqlqueryUpdate = "UPDATE attendancerecord
                             SET timeout = TIME_FORMAT(NOW(), '%h:%i %p')
-                            WHERE studentid = (SELECT studentid FROM students WHERE rfiduid = '$rfidData')";
+                            WHERE studentid = (SELECT studentid FROM students WHERE rfiduid = '$rfidData' OR studentid = '$rfidData')";
 
         $sqlquerystatus = "UPDATE attendancerecord
                             SET status = (
@@ -48,7 +48,7 @@ if (isset($_POST['rfid']) && isset($_GET['eventname'])) {
                                 FROM events
                                 WHERE attendancerecord.eventname = events.eventname
                             )
-                            WHERE studentid = (SELECT studentid FROM students WHERE rfiduid = '$rfidData')";
+                            WHERE studentid = (SELECT studentid FROM students WHERE rfiduid = '$rfidData' OR studentid = '$rfidData')";
 
         $connection->query($sqlqueryUpdate);
         $connection->query($sqlquerystatus);
@@ -56,5 +56,6 @@ if (isset($_POST['rfid']) && isset($_GET['eventname'])) {
         // Student already has both timein and timeout, display a message
         echo "<script>alert('Student is already recorded');</script>";
     }
+    header("Location: attendance.php?eventname=$eventname");
 }
 ?>
