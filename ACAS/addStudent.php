@@ -5,6 +5,8 @@ if (isset($_POST['rfiduid']) && isset($_GET['eventname'])) {
     $rfidData = $_POST['rfiduid'];
     $eventname = mysqli_real_escape_string($connection, $_GET['eventname']);
 
+    $currentTimestamp = date('Y-m-d H:i:s');
+
     // Check if there's an existing record with timein
     $sqlCheck = "SELECT * FROM attendancerecord 
                  WHERE studentid = (SELECT studentid FROM students WHERE rfiduid = '$rfidData' AND eventname = '$eventname')";
@@ -14,9 +16,9 @@ if (isset($_POST['rfiduid']) && isset($_GET['eventname'])) {
 
     if (!$row) {
         // No existing record, so insert a new one with timein
-        $sqlqueryAdd = "INSERT INTO attendancerecord (eventname, studentid, timein, status)
+        $sqlqueryAdd = "INSERT INTO attendancerecord (eventname, studentid, timein, status, updated_at)
                         SELECT  '$eventname' AS eventname, studentid, TIME_FORMAT(NOW(), '%h:%i %p') AS formatted_time, 'ABSENT' AS status
-                        FROM students
+                        ,'$currentTimestamp' AS updated_at FROM students
                         WHERE rfiduid = '$rfidData' OR studentid = '$rfidData'";
 
         if (!$connection->query($sqlqueryAdd)) {
@@ -25,7 +27,7 @@ if (isset($_POST['rfiduid']) && isset($_GET['eventname'])) {
     } elseif ($row['timein'] !== '-' && $row['timeout'] === '-') {
         // Student has timein but no timeout, so insert a new timeout
         $sqlqueryUpdate = "UPDATE attendancerecord
-                            SET timeout = TIME_FORMAT(NOW(), '%h:%i %p')
+                            SET timeout = TIME_FORMAT(NOW(), '%h:%i %p'), updated_at = '$currentTimestamp'
                             WHERE studentid = (SELECT studentid FROM students WHERE rfiduid = '$rfidData' OR studentid = '$rfidData')";
 
         $sqlquerystatus = "UPDATE attendancerecord
@@ -56,6 +58,5 @@ if (isset($_POST['rfiduid']) && isset($_GET['eventname'])) {
         // Student already has both timein and timeout, display a message
         echo "<script>alert('Student is already recorded');</script>";
     }
-    header("Location: attendance.php?eventname=$eventname");
 }
 ?>

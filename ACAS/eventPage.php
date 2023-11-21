@@ -7,6 +7,7 @@
     }
 
     require_once('dbconnection.php');
+    require_once('addEvent.php');
     require_once('eventattendanceFetcher.php');
     require_once('deleteEvent.php');
 ?>
@@ -16,8 +17,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href = "./css/styles.css">
-    <script src = "./script/jqueryscript.js"></script>
-    <script src = "./script/script.js"></script>
     <title>ACAS</title>
 </head>
 <body class = "indexBody">
@@ -46,10 +45,10 @@
         <div class = "eventContainer">
             <div class = "eventForm">
                 <p>NEW EVENT</p>
+                <?php 
+                    require_once('updateEvent.php');
+                ?>
                 <form method = "POST">
-                    <?php 
-                        require_once('addEvent.php');
-                        require_once('updateEvent.php');?>
                     <input type="hidden" name = "eventID" id = "eventID"
                         value = "<?php require('eventFetcher.php'); echo $eventid?>">
                     <div>

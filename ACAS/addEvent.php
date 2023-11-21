@@ -1,6 +1,4 @@
 <?php
-require_once('dbconnection.php');
-
 if (isset($_POST['addEvent'])) {
     $eventName = mysqli_real_escape_string($connection, $_POST['eventName']);
     $eventDate = mysqli_real_escape_string($connection, $_POST['eventDate']);
@@ -16,6 +14,7 @@ if (isset($_POST['addEvent'])) {
     } else {
         // Event does not exist, proceed with insertion
         $sql = "INSERT INTO events (eventname, eventdate, eventstart, eventend) VALUES ('$eventName', '$eventDate', '$eventStart', '$eventEnd')";
+        $connection->query($sql);
     }
 }
 ?>

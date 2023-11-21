@@ -7,7 +7,6 @@
     }
     
     require_once('dbconnection.php');
-    require_once('addStudent.php');
 ?>
 <!DOCTYPE html>
 <html>
@@ -37,40 +36,12 @@
             <?php
                 require_once('eventInfo.php');
             ?>
-            <script>
-$('#rfiduid').on('input', function() {
-    let rfidData = $(this).val();
-
-    // Extract eventname from the current URL
-    let eventName = getParameterByName('eventname');
-
-    // Use jQuery AJAX to send data to the server
-    $.ajax({
-        type: 'POST',
-        url: 'attendance.php?eventname=' + encodeURIComponent(eventName),
-        data: { rfiduid: rfidData },
-        success: function(response) {
-            // Reload the page after the data is successfully sent
-            console.log(rfidData);
-            location.reload();
-        }
-    });
-});
-
-function getParameterByName(name, url) {
-    if (!url) url = window.location.href;
-    name = name.replace(/[\[\]]/g, '\\$&');
-    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-        results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return '';
-    return decodeURIComponent(results[2].replace(/\+/g, ' '));
-}
-            </script>
         </div>
         <div class = "attendanceContainer">
                 <?php
+                    require_once('addStudent.php');
                     require_once('viewData.php');
+                    require_once('resetTime.php');
                 ?>
         </div>
     </div>

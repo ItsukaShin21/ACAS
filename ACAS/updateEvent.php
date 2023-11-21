@@ -6,7 +6,8 @@
         $eventstart = $_POST['eventtimeStart'];
         $eventend = $_POST['eventtimeEnd'];
 
-        $sql = "SELECT * FROM events WHERE eventname = '$eventname'";
+        $sql = "SELECT * FROM events WHERE eventname = '$eventname' AND 
+            eventdate = '$eventdate' AND eventstart = '$eventstart' AND eventend = '$eventend'";
         $checkResult = $connection->query($sql);
 
         if ($checkResult && $checkResult->num_rows > 0) {

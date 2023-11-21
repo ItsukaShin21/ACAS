@@ -4,13 +4,15 @@
     if(isset($_GET['eventname'])) {
         $eventname = $_GET['eventname'];
 
-        $sql = "SELECT * FROM attendancerecord WHERE eventname = '$eventname'";
+        $sql = "SELECT * FROM attendancerecord WHERE eventname = '$eventname'
+        ORDER BY updated_at DESC";
+
         $list = $connection -> query($sql);
     
     if($list -> num_rows > 0) {
         echo 
-            '<table id = "attendanceTable">
-                <caption>'.$eventname.'</caption>
+            '<form method = "POST">
+            <table id = "attendanceTable">
                 <thead>
                     <th class = "idHead">ID number</th>
                     <th class = "nameHead">Name</th>
@@ -38,18 +40,19 @@
 
                             echo
                             '<tr>
-                                <td>'.$studentid.'</td>
+                                <td name = "studentid">'.$studentid.'</td>
                                 <td>'.$name.'</td>
                                 <td>'.$program.'</td>
                                 <td>'.$section.'</td>
-                                <td>'.$timein.'</td>
-                                <td>'.$timeout.'</td>
+                                <td name = "timeIn" class="clickable" onclick="handleClick(event)">'.$timein.'</td>
+                                <td name = "timeOut" class="clickable" onclick="handleClick(event)">'.$timeout.'</td>
                                 <td>'.$status.'</td>
                             </tr>';
                         }
                     }
                     echo '</tbody>
-                        </table>';
+                        </table>
+                        <form>';
                     }
                     else {
                         echo '<div class = "norecordDisplay"><p>No record</p></div>';

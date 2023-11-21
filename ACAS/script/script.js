@@ -70,3 +70,55 @@ $(document).ready(function() {
         }
     });
 });
+
+// $('#rfiduid').on('input', function() {
+//     let rfidData = $(this).val();
+
+//     // Extract eventname from the current URL
+//     let eventName = getParameterByName('eventname');
+
+//     // Use jQuery AJAX to send data to the server
+//     $.ajax({
+//         type: 'POST',
+//         url: 'addStudent.php',
+//         data: { rfiduid: rfidData },
+//         success: function(response) {
+//                 alert("success");
+//                 location.reload();
+//         }
+//     });
+// });
+
+// function getParameterByName(name, url) {
+//     if (!url) url = window.location.href;
+//     name = name.replace(/[\[\]]/g, '\\$&');
+//     var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+//         results = regex.exec(url);
+//     if (!results) return null;
+//     if (!results[2]) return '';
+//     return decodeURIComponent(results[2].replace(/\+/g, ' '));
+// }
+
+function handleClick(event) {
+    // Get the content of the clicked cell
+    let cellContent = $(event.target).text();
+
+    // Find the closest row from the clicked element
+    let row = $(event.target).closest('tr');
+    let studentId = row.find('[name="studentid"]').text();
+
+    $.ajax({
+        type: 'POST',
+        url: 'resetTime.php',
+        data: {
+            studentid: studentId,
+            timeIn: cellContent
+        },
+        success: function(response) {
+            location.reload();
+        },
+        error: function(xhr, status, error) {
+            console.error("Error:", xhr.responseText);
+        }
+    });
+}

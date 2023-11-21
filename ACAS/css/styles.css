@@ -332,3 +332,10 @@ td.present {
     font-weight: bold;
     margin-bottom: 1%;
 }
+.clickable {
+    cursor: pointer;
+}
+.clickable:hover {
+    background: #070366;
+    color: #fff;
+}
