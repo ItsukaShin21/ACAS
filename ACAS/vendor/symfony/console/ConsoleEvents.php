@@ -11,11 +11,6 @@
 
 namespace Symfony\Component\Console;
 
-use Symfony\Component\Console\Event\ConsoleCommandEvent;
-use Symfony\Component\Console\Event\ConsoleErrorEvent;
-use Symfony\Component\Console\Event\ConsoleSignalEvent;
-use Symfony\Component\Console\Event\ConsoleTerminateEvent;
-
 /**
  * Contains all events dispatched by an Application.
  *
@@ -26,47 +21,35 @@ final class ConsoleEvents
     /**
      * The COMMAND event allows you to attach listeners before any command is
      * executed by the console. It also allows you to modify the command, input and output
-     * before they are handed to the command.
+     * before they are handled to the command.
      *
-     * @Event("Symfony\Component\Console\Event\ConsoleCommandEvent")
-     */
-    public const COMMAND = 'console.command';
-
-    /**
-     * The SIGNAL event allows you to perform some actions
-     * after the command execution was interrupted.
+     * The event listener method receives a Symfony\Component\Console\Event\ConsoleCommandEvent
+     * instance.
      *
-     * @Event("Symfony\Component\Console\Event\ConsoleSignalEvent")
+     * @Event
      */
-    public const SIGNAL = 'console.signal';
+    const COMMAND = 'console.command';
 
     /**
      * The TERMINATE event allows you to attach listeners after a command is
      * executed by the console.
      *
-     * @Event("Symfony\Component\Console\Event\ConsoleTerminateEvent")
+     * The event listener method receives a Symfony\Component\Console\Event\ConsoleTerminateEvent
+     * instance.
+     *
+     * @Event
      */
-    public const TERMINATE = 'console.terminate';
+    const TERMINATE = 'console.terminate';
 
     /**
-     * The ERROR event occurs when an uncaught exception or error appears.
+     * The EXCEPTION event occurs when an uncaught exception appears.
      *
-     * This event allows you to deal with the exception/error or
-     * to modify the thrown exception.
+     * This event allows you to deal with the exception or
+     * to modify the thrown exception. The event listener method receives
+     * a Symfony\Component\Console\Event\ConsoleExceptionEvent
+     * instance.
      *
-     * @Event("Symfony\Component\Console\Event\ConsoleErrorEvent")
+     * @Event
      */
-    public const ERROR = 'console.error';
-
-    /**
-     * Event aliases.
-     *
-     * These aliases can be consumed by RegisterListenersPass.
-     */
-    public const ALIASES = [
-        ConsoleCommandEvent::class => self::COMMAND,
-        ConsoleErrorEvent::class => self::ERROR,
-        ConsoleSignalEvent::class => self::SIGNAL,
-        ConsoleTerminateEvent::class => self::TERMINATE,
-    ];
+    const EXCEPTION = 'console.exception';
 }

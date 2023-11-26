@@ -6,5 +6,8 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Behat\\Gherkin' => array($vendorDir . '/behat/gherkin/src'),
+    'phpDocumentor' => array($vendorDir . '/phpdocumentor/reflection-docblock/src'),
+    'Prophecy\\' => array($vendorDir . '/phpspec/prophecy/src'),
+    'PhpSpec' => array($vendorDir . '/phpspec/phpspec/src'),
+    'Diff' => array($vendorDir . '/phpspec/php-diff/lib'),
 );

@@ -7,19 +7,19 @@
     }
 
     require_once('dbconnection.php');
-    require_once('addEvent.php');
     require_once('eventattendanceFetcher.php');
-    require_once('deleteEvent.php');
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href = "./css/styles.css">
+    <link rel="stylesheet" href = "./css/eventpageStyle.css">
+    <script src = './script/jqueryscript.js'></script>
+    <script src = './script/script.js'></script>
     <title>ACAS</title>
 </head>
-<body class = "indexBody">
+<body class = "eventpageBody">
     <div class = "eventheaderContainer">
         <img src = "./images/ACAS logo.png" class = "acasLogo">
         <nav>
@@ -38,15 +38,17 @@
                     </select>
                     <input type="submit" name="selectEvent" value="START ATTENDANCE">
                     <input type="submit" name="editEvent" value="EDIT EVENT">
-                    <input type="submit" name="deleteEvent" value="DELETE EVENT">
+                    <input type="submit" id = "deleteEvent" name="deleteEvent" value="DELETE EVENT">
                 </div>
             </form>
         </div>
         <div class = "eventContainer">
             <div class = "eventForm">
                 <p>NEW EVENT</p>
-                <?php 
+                <?php
+                    require_once('addEvent.php');
                     require_once('updateEvent.php');
+                    require_once('deleteEvent.php');
                 ?>
                 <form method = "POST">
                     <input type="hidden" name = "eventID" id = "eventID"

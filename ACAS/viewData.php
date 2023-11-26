@@ -44,8 +44,10 @@
                                 <td>'.$name.'</td>
                                 <td>'.$program.'</td>
                                 <td>'.$section.'</td>
-                                <td name = "timeIn" class="clickable" onclick="handleClick(event)">'.$timein.'</td>
-                                <td name = "timeOut" class="clickable" onclick="handleClick(event)">'.$timeout.'</td>
+                                <td>'.date("h:i A", strtotime($timein)).'</td>
+                                <td>
+                                ' . ($timeout === '00:00:00' ? '00:00:00' : date("h:i A", strtotime($timeout))) . '
+                                </td>
                                 <td>'.$status.'</td>
                             </tr>';
                         }

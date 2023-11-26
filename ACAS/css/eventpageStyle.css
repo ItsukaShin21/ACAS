@@ -1,0 +1,146 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.eventpageBody {
+    background: url('../images/ACAS background.png');
+    background-size: cover;
+    background-attachment: fixed;
+}
+.acasLogo {
+    width: 20%;
+    height: 550%;
+    margin: 1% 0% 0% 0%;
+}
+.eventheaderContainer {
+    width: 100vw;
+    height: 9%;
+    background: #070366;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: fixed;
+    z-index: 1;
+}
+.eventheaderContainer nav {
+    width: 30%;
+    margin-left: 65%;
+}
+.eventheaderContainer nav a {
+    margin-left: 10%;
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: bold;
+}
+.mainContainer {
+    display: inline-flex;
+}
+.navContainer {
+    width: 20%;
+    height: 100%;
+    background: #D9D9D9;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    margin: 2.9% 0% 0% 0%;
+    z-index: 1;
+}
+.navContainer p {
+    font-weight: 700;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 30px 0px 0px 15px;
+}
+.navContainer select {
+    margin-top: 10%;
+    width: 110%;
+    height: 30px;
+    border-radius: 20px;
+    text-indent: 10px;
+}
+.eventList input {
+    margin-top: 10%;
+    margin-left: 4%;
+    height: 35px;
+    background-color: #070366;
+    color: #ffffff;
+    font-weight: 600;
+    border-radius: 20px;
+    width: 90%;
+    border: none;
+}
+.eventList select {
+    width: 90%;
+    margin-left: 3.5%;
+}
+.eventList input:hover {
+    background-color: #241ed3;
+}
+.eventContainer {
+    width: 60%;
+    height: 80%;
+    top: 15%;
+    left: 30%;
+    position: absolute;
+    z-index: 0;
+}
+.eventForm {
+    width: 50%;
+    height: 60%;
+    background: #ffffff;
+    margin: 10% auto; /* Center the form horizontally */
+    text-align: center;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.eventForm p {
+    font-size: 20px;
+    font-weight: 700;
+}
+.eventForm div {
+    display: flex;
+    justify-content: center;
+}
+.eventForm label {
+    margin-top: 3%; /* Adjust the spacing between label and input */
+    width: 30%; /* Adjust the width as needed */
+    text-align: left; /* Align the text to the right for better visual alignment */
+    font-weight: 500;
+}
+.eventForm input[type="text"],
+.eventForm input[type="date"],
+.eventForm input[type="time"] {
+    margin-top: 3%; /* Adjust the spacing between label and input */
+    height: 30px;
+    width: 50%; /* Adjust the width as needed */
+    border-radius: 20px;
+    border: none;
+    background: #d4d0d0;
+}
+.eventForm input[type = "text"] {
+    text-indent: 10px;
+}
+.eventForm input[type = "date"] {
+    text-indent: 5px;
+}
+.eventForm input[type = "time"] {
+    text-indent: 5px;
+}
+.eventForm input[type = "submit"] {
+    margin-top: 5%;
+    width: 37%;
+    height: 30px;
+    border-radius: 20px;
+    border: none;
+    background: rgb(91, 240, 80);
+    font-weight: 700;
+}
+.eventForm input[type = "submit"]:nth-child(1) {
+    margin-right: 5%;
+}
+.eventForm input[type = "submit"]:hover {
+    background: rgb(142, 227, 136);
+}

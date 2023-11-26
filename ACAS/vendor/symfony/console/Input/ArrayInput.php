@@ -19,13 +19,13 @@ use Symfony\Component\Console\Exception\InvalidOptionException;
  *
  * Usage:
  *
- *     $input = new ArrayInput(['command' => 'foo:bar', 'foo' => 'bar', '--bar' => 'foobar']);
+ *     $input = new ArrayInput(array('name' => 'foo', '--bar' => 'foobar'));
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
 class ArrayInput extends Input
 {
-    private array $parameters;
+    private $parameters;
 
     public function __construct(array $parameters, InputDefinition $definition = null)
     {
@@ -34,30 +34,30 @@ class ArrayInput extends Input
         parent::__construct($definition);
     }
 
-    public function getFirstArgument(): ?string
+    /**
+     * {@inheritdoc}
+     */
+    public function getFirstArgument()
     {
-        foreach ($this->parameters as $param => $value) {
-            if ($param && \is_string($param) && '-' === $param[0]) {
+        foreach ($this->parameters as $key => $value) {
+            if ($key && '-' === $key[0]) {
                 continue;
             }
 
             return $value;
         }
-
-        return null;
     }
 
-    public function hasParameterOption(string|array $values, bool $onlyParams = false): bool
+    /**
+     * {@inheritdoc}
+     */
+    public function hasParameterOption($values)
     {
         $values = (array) $values;
 
         foreach ($this->parameters as $k => $v) {
             if (!\is_int($k)) {
                 $v = $k;
-            }
-
-            if ($onlyParams && '--' === $v) {
-                return false;
             }
 
             if (\in_array($v, $values)) {
@@ -68,15 +68,14 @@ class ArrayInput extends Input
         return false;
     }
 
-    public function getParameterOption(string|array $values, string|bool|int|float|array|null $default = false, bool $onlyParams = false): mixed
+    /**
+     * {@inheritdoc}
+     */
+    public function getParameterOption($values, $default = false)
     {
         $values = (array) $values;
 
         foreach ($this->parameters as $k => $v) {
-            if ($onlyParams && ('--' === $k || (\is_int($k) && '--' === $v))) {
-                return $default;
-            }
-
             if (\is_int($k)) {
                 if (\in_array($v, $values)) {
                     return true;
@@ -91,22 +90,23 @@ class ArrayInput extends Input
 
     /**
      * Returns a stringified representation of the args passed to the command.
+     *
+     * @return string
      */
-    public function __toString(): string
+    public function __toString()
     {
-        $params = [];
+        $params = array();
         foreach ($this->parameters as $param => $val) {
-            if ($param && \is_string($param) && '-' === $param[0]) {
-                $glue = ('-' === $param[1]) ? '=' : ' ';
+            if ($param && '-' === $param[0]) {
                 if (\is_array($val)) {
                     foreach ($val as $v) {
-                        $params[] = $param.('' != $v ? $glue.$this->escapeToken($v) : '');
+                        $params[] = $param.('' != $v ? '='.$this->escapeToken($v) : '');
                     }
                 } else {
-                    $params[] = $param.('' != $val ? $glue.$this->escapeToken($val) : '');
+                    $params[] = $param.('' != $val ? '='.$this->escapeToken($val) : '');
                 }
             } else {
-                $params[] = \is_array($val) ? implode(' ', array_map($this->escapeToken(...), $val)) : $this->escapeToken($val);
+                $params[] = \is_array($val) ? implode(' ', array_map(array($this, 'escapeToken'), $val)) : $this->escapeToken($val);
             }
         }
 
@@ -114,17 +114,14 @@ class ArrayInput extends Input
     }
 
     /**
-     * @return void
+     * {@inheritdoc}
      */
     protected function parse()
     {
         foreach ($this->parameters as $key => $value) {
-            if ('--' === $key) {
-                return;
-            }
-            if (str_starts_with($key, '--')) {
+            if (0 === strpos($key, '--')) {
                 $this->addLongOption(substr($key, 2), $value);
-            } elseif (str_starts_with($key, '-')) {
+            } elseif ('-' === $key[0]) {
                 $this->addShortOption(substr($key, 1), $value);
             } else {
                 $this->addArgument($key, $value);
@@ -135,9 +132,12 @@ class ArrayInput extends Input
     /**
      * Adds a short option value.
      *
+     * @param string $shortcut The short option key
+     * @param mixed  $value    The value for the option
+     *
      * @throws InvalidOptionException When option given doesn't exist
      */
-    private function addShortOption(string $shortcut, mixed $value): void
+    private function addShortOption($shortcut, $value)
     {
         if (!$this->definition->hasShortcut($shortcut)) {
             throw new InvalidOptionException(sprintf('The "-%s" option does not exist.', $shortcut));
@@ -149,20 +149,16 @@ class ArrayInput extends Input
     /**
      * Adds a long option value.
      *
+     * @param string $name  The long option key
+     * @param mixed  $value The value for the option
+     *
      * @throws InvalidOptionException When option given doesn't exist
      * @throws InvalidOptionException When a required value is missing
      */
-    private function addLongOption(string $name, mixed $value): void
+    private function addLongOption($name, $value)
     {
         if (!$this->definition->hasOption($name)) {
-            if (!$this->definition->hasNegation($name)) {
-                throw new InvalidOptionException(sprintf('The "--%s" option does not exist.', $name));
-            }
-
-            $optionName = $this->definition->negationToName($name);
-            $this->options[$optionName] = false;
-
-            return;
+            throw new InvalidOptionException(sprintf('The "--%s" option does not exist.', $name));
         }
 
         $option = $this->definition->getOption($name);
@@ -172,9 +168,7 @@ class ArrayInput extends Input
                 throw new InvalidOptionException(sprintf('The "--%s" option requires a value.', $name));
             }
 
-            if (!$option->isValueOptional()) {
-                $value = true;
-            }
+            $value = $option->isValueOptional() ? $option->getDefault() : true;
         }
 
         $this->options[$name] = $value;
@@ -183,9 +177,12 @@ class ArrayInput extends Input
     /**
      * Adds an argument value.
      *
+     * @param string $name  The argument name
+     * @param mixed  $value The value for the argument
+     *
      * @throws InvalidArgumentException When argument given doesn't exist
      */
-    private function addArgument(string|int $name, mixed $value): void
+    private function addArgument($name, $value)
     {
         if (!$this->definition->hasArgument($name)) {
             throw new InvalidArgumentException(sprintf('The "%s" argument does not exist.', $name));

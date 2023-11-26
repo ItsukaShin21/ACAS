@@ -7,19 +7,20 @@
     }
     
     require_once('dbconnection.php');
+    require_once('clearAttendance.php');
 ?>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href = "./css/styles.css">
+    <link rel="stylesheet" href = "./css/attendancepageStyle.css">
     <script src = "./script/jqueryscript.js"></script>
     <script src = "./script/sheetjs.js"></script>
     <script src = "./script/script.js"></script>
     <title>ACAS</title>
 </head>
-<body class = "indexBody">
+<body class = "attendanceBody">
     <div class = "headerContainer">
         <img src = "./images/ACAS logo.png" class = "acasLogo">
         <nav>
@@ -31,7 +32,10 @@
     <div class = "mainContainer">
         <div class = "navContainer">
             <form method = "POST" class = "rfidtxtBox">
-                <input type = "password" placeholder = "RFID" name = "rfiduid" id = "rfiduid">
+                <input type = "password" placeholder = "RFID / STUDENT ID" name = "rfiduid" id = "rfiduid">
+            </form>
+            <form method="POST" class = "rfidtxtBox">
+                <input type = "submit" name = "clearAttendance" id = "clearAttendance" value = "CLEAR ATTENDANCE">
             </form>
             <?php
                 require_once('eventInfo.php');
@@ -41,7 +45,6 @@
                 <?php
                     require_once('addStudent.php');
                     require_once('viewData.php');
-                    require_once('resetTime.php');
                 ?>
         </div>
     </div>

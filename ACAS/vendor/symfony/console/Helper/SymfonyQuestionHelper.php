@@ -11,7 +11,9 @@
 
 namespace Symfony\Component\Console\Helper;
 
+use Symfony\Component\Console\Exception\LogicException;
 use Symfony\Component\Console\Formatter\OutputFormatter;
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
@@ -26,16 +28,34 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class SymfonyQuestionHelper extends QuestionHelper
 {
     /**
-     * @return void
+     * {@inheritdoc}
+     */
+    public function ask(InputInterface $input, OutputInterface $output, Question $question)
+    {
+        $validator = $question->getValidator();
+        $question->setValidator(function ($value) use ($validator) {
+            if (null !== $validator) {
+                $value = $validator($value);
+            } else {
+                // make required
+                if (!\is_array($value) && !\is_bool($value) && 0 === \strlen($value)) {
+                    throw new LogicException('A value is required.');
+                }
+            }
+
+            return $value;
+        });
+
+        return parent::ask($input, $output, $question);
+    }
+
+    /**
+     * {@inheritdoc}
      */
     protected function writePrompt(OutputInterface $output, Question $question)
     {
         $text = OutputFormatter::escapeTrailingBackslash($question->getQuestion());
         $default = $question->getDefault();
-
-        if ($question->isMultiline()) {
-            $text .= sprintf(' (press %s to continue)', $this->getEofShortcut());
-        }
 
         switch (true) {
             case null === $default:
@@ -62,7 +82,7 @@ class SymfonyQuestionHelper extends QuestionHelper
 
             case $question instanceof ChoiceQuestion:
                 $choices = $question->getChoices();
-                $text = sprintf(' <info>%s</info> [<comment>%s</comment>]:', $text, OutputFormatter::escape($choices[$default] ?? $default));
+                $text = sprintf(' <info>%s</info> [<comment>%s</comment>]:', $text, OutputFormatter::escape(isset($choices[$default]) ? $choices[$default] : $default));
 
                 break;
 
@@ -72,19 +92,19 @@ class SymfonyQuestionHelper extends QuestionHelper
 
         $output->writeln($text);
 
-        $prompt = ' > ';
-
         if ($question instanceof ChoiceQuestion) {
-            $output->writeln($this->formatChoiceQuestionChoices($question, 'comment'));
+            $width = max(array_map('strlen', array_keys($question->getChoices())));
 
-            $prompt = $question->getPrompt();
+            foreach ($question->getChoices() as $key => $value) {
+                $output->writeln(sprintf("  [<comment>%-${width}s</comment>] %s", $key, $value));
+            }
         }
 
-        $output->write($prompt);
+        $output->write(' > ');
     }
 
     /**
-     * @return void
+     * {@inheritdoc}
      */
     protected function writeError(OutputInterface $output, \Exception $error)
     {
@@ -96,14 +116,5 @@ class SymfonyQuestionHelper extends QuestionHelper
         }
 
         parent::writeError($output, $error);
-    }
-
-    private function getEofShortcut(): string
-    {
-        if ('Windows' === \PHP_OS_FAMILY) {
-            return '<comment>Ctrl+Z</comment> then <comment>Enter</comment>';
-        }
-
-        return '<comment>Ctrl+D</comment>';
     }
 }

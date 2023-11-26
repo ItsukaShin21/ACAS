@@ -1,8 +1,15 @@
 {
     "require-dev": {
         "phpunit/phpunit": "^10.4",
-        "codeception/codeception": "^5.0",
-        "codeception/module-phpbrowser": "*",
-        "codeception/module-asserts": "*"
+        "phpspec/phpspec": "^2.0"
+    },
+
+    "autoload-dev": {
+        "psr-4": {
+            "Your\\Namespace\\Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "cboden/ratchet": "^0.4.4"
     }
 }

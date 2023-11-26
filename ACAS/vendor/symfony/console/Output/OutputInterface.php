@@ -20,88 +20,67 @@ use Symfony\Component\Console\Formatter\OutputFormatterInterface;
  */
 interface OutputInterface
 {
-    public const VERBOSITY_QUIET = 16;
-    public const VERBOSITY_NORMAL = 32;
-    public const VERBOSITY_VERBOSE = 64;
-    public const VERBOSITY_VERY_VERBOSE = 128;
-    public const VERBOSITY_DEBUG = 256;
+    const VERBOSITY_QUIET = 16;
+    const VERBOSITY_NORMAL = 32;
+    const VERBOSITY_VERBOSE = 64;
+    const VERBOSITY_VERY_VERBOSE = 128;
+    const VERBOSITY_DEBUG = 256;
 
-    public const OUTPUT_NORMAL = 1;
-    public const OUTPUT_RAW = 2;
-    public const OUTPUT_PLAIN = 4;
+    const OUTPUT_NORMAL = 1;
+    const OUTPUT_RAW = 2;
+    const OUTPUT_PLAIN = 4;
 
     /**
      * Writes a message to the output.
      *
-     * @param bool $newline Whether to add a newline
-     * @param int  $options A bitmask of options (one of the OUTPUT or VERBOSITY constants),
-     *                      0 is considered the same as self::OUTPUT_NORMAL | self::VERBOSITY_NORMAL
-     *
-     * @return void
+     * @param string|array $messages The message as an array of strings or a single string
+     * @param bool         $newline  Whether to add a newline
+     * @param int          $options  A bitmask of options (one of the OUTPUT or VERBOSITY constants), 0 is considered the same as self::OUTPUT_NORMAL | self::VERBOSITY_NORMAL
      */
-    public function write(string|iterable $messages, bool $newline = false, int $options = 0);
+    public function write($messages, $newline = false, $options = 0);
 
     /**
      * Writes a message to the output and adds a newline at the end.
      *
-     * @param int $options A bitmask of options (one of the OUTPUT or VERBOSITY constants),
-     *                     0 is considered the same as self::OUTPUT_NORMAL | self::VERBOSITY_NORMAL
-     *
-     * @return void
+     * @param string|array $messages The message as an array of strings or a single string
+     * @param int          $options  A bitmask of options (one of the OUTPUT or VERBOSITY constants), 0 is considered the same as self::OUTPUT_NORMAL | self::VERBOSITY_NORMAL
      */
-    public function writeln(string|iterable $messages, int $options = 0);
+    public function writeln($messages, $options = 0);
 
     /**
      * Sets the verbosity of the output.
      *
-     * @return void
+     * @param int $level The level of verbosity (one of the VERBOSITY constants)
      */
-    public function setVerbosity(int $level);
+    public function setVerbosity($level);
 
     /**
      * Gets the current verbosity of the output.
+     *
+     * @return int The current level of verbosity (one of the VERBOSITY constants)
      */
-    public function getVerbosity(): int;
-
-    /**
-     * Returns whether verbosity is quiet (-q).
-     */
-    public function isQuiet(): bool;
-
-    /**
-     * Returns whether verbosity is verbose (-v).
-     */
-    public function isVerbose(): bool;
-
-    /**
-     * Returns whether verbosity is very verbose (-vv).
-     */
-    public function isVeryVerbose(): bool;
-
-    /**
-     * Returns whether verbosity is debug (-vvv).
-     */
-    public function isDebug(): bool;
+    public function getVerbosity();
 
     /**
      * Sets the decorated flag.
      *
-     * @return void
+     * @param bool $decorated Whether to decorate the messages
      */
-    public function setDecorated(bool $decorated);
+    public function setDecorated($decorated);
 
     /**
      * Gets the decorated flag.
+     *
+     * @return bool true if the output will decorate messages, false otherwise
      */
-    public function isDecorated(): bool;
+    public function isDecorated();
 
-    /**
-     * @return void
-     */
     public function setFormatter(OutputFormatterInterface $formatter);
 
     /**
      * Returns current output formatter instance.
+     *
+     * @return OutputFormatterInterface
      */
-    public function getFormatter(): OutputFormatterInterface;
+    public function getFormatter();
 }

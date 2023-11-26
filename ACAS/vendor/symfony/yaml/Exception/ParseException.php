@@ -18,18 +18,19 @@ namespace Symfony\Component\Yaml\Exception;
  */
 class ParseException extends RuntimeException
 {
-    private ?string $parsedFile;
-    private int $parsedLine;
-    private ?string $snippet;
-    private string $rawMessage;
+    private $parsedFile;
+    private $parsedLine;
+    private $snippet;
+    private $rawMessage;
 
     /**
-     * @param string      $message    The error message
-     * @param int         $parsedLine The line where the error occurred
-     * @param string|null $snippet    The snippet of code near the problem
-     * @param string|null $parsedFile The file name where the error occurred
+     * @param string          $message    The error message
+     * @param int             $parsedLine The line where the error occurred
+     * @param string|null     $snippet    The snippet of code near the problem
+     * @param string|null     $parsedFile The file name where the error occurred
+     * @param \Exception|null $previous   The previous exception
      */
-    public function __construct(string $message, int $parsedLine = -1, string $snippet = null, string $parsedFile = null, \Throwable $previous = null)
+    public function __construct($message, $parsedLine = -1, $snippet = null, $parsedFile = null, \Exception $previous = null)
     {
         $this->parsedFile = $parsedFile;
         $this->parsedLine = $parsedLine;
@@ -43,8 +44,10 @@ class ParseException extends RuntimeException
 
     /**
      * Gets the snippet of code near the error.
+     *
+     * @return string The snippet of code
      */
-    public function getSnippet(): string
+    public function getSnippet()
     {
         return $this->snippet;
     }
@@ -52,9 +55,9 @@ class ParseException extends RuntimeException
     /**
      * Sets the snippet of code near the error.
      *
-     * @return void
+     * @param string $snippet The code snippet
      */
-    public function setSnippet(string $snippet)
+    public function setSnippet($snippet)
     {
         $this->snippet = $snippet;
 
@@ -65,8 +68,10 @@ class ParseException extends RuntimeException
      * Gets the filename where the error occurred.
      *
      * This method returns null if a string is parsed.
+     *
+     * @return string The filename
      */
-    public function getParsedFile(): string
+    public function getParsedFile()
     {
         return $this->parsedFile;
     }
@@ -74,9 +79,9 @@ class ParseException extends RuntimeException
     /**
      * Sets the filename where the error occurred.
      *
-     * @return void
+     * @param string $parsedFile The filename
      */
-    public function setParsedFile(string $parsedFile)
+    public function setParsedFile($parsedFile)
     {
         $this->parsedFile = $parsedFile;
 
@@ -85,8 +90,10 @@ class ParseException extends RuntimeException
 
     /**
      * Gets the line where the error occurred.
+     *
+     * @return int The file line
      */
-    public function getParsedLine(): int
+    public function getParsedLine()
     {
         return $this->parsedLine;
     }
@@ -94,27 +101,32 @@ class ParseException extends RuntimeException
     /**
      * Sets the line where the error occurred.
      *
-     * @return void
+     * @param int $parsedLine The file line
      */
-    public function setParsedLine(int $parsedLine)
+    public function setParsedLine($parsedLine)
     {
         $this->parsedLine = $parsedLine;
 
         $this->updateRepr();
     }
 
-    private function updateRepr(): void
+    private function updateRepr()
     {
         $this->message = $this->rawMessage;
 
         $dot = false;
-        if (str_ends_with($this->message, '.')) {
+        if ('.' === substr($this->message, -1)) {
             $this->message = substr($this->message, 0, -1);
             $dot = true;
         }
 
         if (null !== $this->parsedFile) {
-            $this->message .= sprintf(' in %s', json_encode($this->parsedFile, \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE));
+            if (\PHP_VERSION_ID >= 50400) {
+                $jsonOptions = JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE;
+            } else {
+                $jsonOptions = 0;
+            }
+            $this->message .= sprintf(' in %s', json_encode($this->parsedFile, $jsonOptions));
         }
 
         if ($this->parsedLine >= 0) {

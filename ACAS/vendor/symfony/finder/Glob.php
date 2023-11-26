@@ -18,7 +18,7 @@ namespace Symfony\Component\Finder;
  *
  *     // prints foo.bar and foo.baz
  *     $regex = glob_to_regex("foo.*");
- *     for (['foo.bar', 'foo.baz', 'foo', 'bar'] as $t)
+ *     for (array('foo.bar', 'foo.baz', 'foo', 'bar') as $t)
  *     {
  *         if (/$regex/) echo "matched: $car\n";
  *     }
@@ -37,8 +37,15 @@ class Glob
 {
     /**
      * Returns a regexp which is the equivalent of the glob pattern.
+     *
+     * @param string $glob                The glob pattern
+     * @param bool   $strictLeadingDot
+     * @param bool   $strictWildcardSlash
+     * @param string $delimiter           Optional delimiter
+     *
+     * @return string regex The regexp
      */
-    public static function toRegex(string $glob, bool $strictLeadingDot = true, bool $strictWildcardSlash = true, string $delimiter = '#'): string
+    public static function toRegex($glob, $strictLeadingDot = true, $strictWildcardSlash = true, $delimiter = '#')
     {
         $firstByte = true;
         $escaping = false;
@@ -47,28 +54,16 @@ class Glob
         $sizeGlob = \strlen($glob);
         for ($i = 0; $i < $sizeGlob; ++$i) {
             $car = $glob[$i];
-            if ($firstByte && $strictLeadingDot && '.' !== $car) {
-                $regex .= '(?=[^\.])';
+            if ($firstByte) {
+                if ($strictLeadingDot && '.' !== $car) {
+                    $regex .= '(?=[^\.])';
+                }
+
+                $firstByte = false;
             }
 
-            $firstByte = '/' === $car;
-
-            if ($firstByte && $strictWildcardSlash && isset($glob[$i + 2]) && '**' === $glob[$i + 1].$glob[$i + 2] && (!isset($glob[$i + 3]) || '/' === $glob[$i + 3])) {
-                $car = '[^/]++/';
-                if (!isset($glob[$i + 3])) {
-                    $car .= '?';
-                }
-
-                if ($strictLeadingDot) {
-                    $car = '(?=[^\.])'.$car;
-                }
-
-                $car = '/(?:'.$car.')*';
-                $i += 2 + isset($glob[$i + 3]);
-
-                if ('/' === $delimiter) {
-                    $car = str_replace('/', '\\/', $car);
-                }
+            if ('/' === $car) {
+                $firstByte = true;
             }
 
             if ($delimiter === $car || '.' === $car || '(' === $car || ')' === $car || '|' === $car || '+' === $car || '^' === $car || '$' === $car) {

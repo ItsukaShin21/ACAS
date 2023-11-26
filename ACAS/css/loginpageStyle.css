@@ -1,0 +1,79 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.loginBody {
+    background: url('../images/ACAS background.png');
+    background-size: cover;
+    background-attachment: fixed;
+}
+.loginContainer {
+    width: 100vw;
+    height: 9%;
+    background: #070366;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: fixed;
+    z-index: 1;
+}
+.mainContainer {
+    display: inline-flex;
+}
+.mainSection {
+    display: flex;
+    height: 100vh;
+    align-items: center;
+}
+.acasLogo {
+    width: 20%;
+    height: 550%;
+    margin: 1% 0% 0% 0%;
+}
+.loginForm {
+    width: 30%;
+    height: 40%;
+    background: #ffffff;
+    margin: 10% auto; /* Center the form horizontally */
+    text-align: center;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.loginForm form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.loginForm input[type="password"] {
+    margin-top: 3%; /* Adjust the spacing between label and input */
+    height: 30px;
+    width: 50%; /* Adjust the width as needed */
+    border-radius: 20px;
+    border: none;
+    background: #d4d0d0;
+    text-indent: 10px;
+}
+
+.loginForm input[type="submit"] {
+    margin-top: 5%;
+    width: 37%;
+    height: 30px;
+    border-radius: 20px;
+    border: none;
+    background: rgb(91, 240, 80);
+    font-weight: 700;
+}
+
+.loginForm p {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.loginForm input[type = "submit"]:hover {
+    background: rgb(142, 227, 136);
+}

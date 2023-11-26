@@ -22,32 +22,44 @@ class FormatterHelper extends Helper
 {
     /**
      * Formats a message within a section.
+     *
+     * @param string $section The section name
+     * @param string $message The message
+     * @param string $style   The style to apply to the section
+     *
+     * @return string The format section
      */
-    public function formatSection(string $section, string $message, string $style = 'info'): string
+    public function formatSection($section, $message, $style = 'info')
     {
         return sprintf('<%s>[%s]</%s> %s', $style, $section, $style, $message);
     }
 
     /**
      * Formats a message as a block of text.
+     *
+     * @param string|array $messages The message to write in the block
+     * @param string       $style    The style to apply to the whole block
+     * @param bool         $large    Whether to return a large block
+     *
+     * @return string The formatter message
      */
-    public function formatBlock(string|array $messages, string $style, bool $large = false): string
+    public function formatBlock($messages, $style, $large = false)
     {
         if (!\is_array($messages)) {
-            $messages = [$messages];
+            $messages = array($messages);
         }
 
         $len = 0;
-        $lines = [];
+        $lines = array();
         foreach ($messages as $message) {
             $message = OutputFormatter::escape($message);
             $lines[] = sprintf($large ? '  %s  ' : ' %s ', $message);
-            $len = max(self::width($message) + ($large ? 4 : 2), $len);
+            $len = max($this->strlen($message) + ($large ? 4 : 2), $len);
         }
 
-        $messages = $large ? [str_repeat(' ', $len)] : [];
+        $messages = $large ? array(str_repeat(' ', $len)) : array();
         for ($i = 0; isset($lines[$i]); ++$i) {
-            $messages[] = $lines[$i].str_repeat(' ', $len - self::width($lines[$i]));
+            $messages[] = $lines[$i].str_repeat(' ', $len - $this->strlen($lines[$i]));
         }
         if ($large) {
             $messages[] = str_repeat(' ', $len);
@@ -61,20 +73,9 @@ class FormatterHelper extends Helper
     }
 
     /**
-     * Truncates a message to the given length.
+     * {@inheritdoc}
      */
-    public function truncate(string $message, int $length, string $suffix = '...'): string
-    {
-        $computedLength = $length - self::width($suffix);
-
-        if ($computedLength > self::width($message)) {
-            return $message;
-        }
-
-        return self::substr($message, 0, $length).$suffix;
-    }
-
-    public function getName(): string
+    public function getName()
     {
         return 'formatter';
     }
