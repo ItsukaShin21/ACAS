@@ -29,7 +29,7 @@
     </div>
     <div class = "mainContainer">
         <div class = "navContainer">
-            <form method="POST" class="rfidtxtBox">
+            <form method="POST">
                 <p>EVENTS</p>
                 <div class="eventList">
                     <select name="eventname" id="eventname" required>
@@ -37,41 +37,41 @@
                             <?php require_once('viewEvents.php');?>
                     </select>
                     <input type="submit" name="selectEvent" value="START ATTENDANCE">
-                    <input type="submit" name="editEvent" value="EDIT EVENT">
-                    <input type="submit" id = "deleteEvent" name="deleteEvent" value="DELETE EVENT">
+                    <input type="submit" name = "editEvent" id = "editEvent" value="EDIT EVENT">
+                    <input type="submit" name="deleteEvent" id = "deleteEvent" value="DELETE EVENT">
                 </div>
             </form>
         </div>
         <div class = "eventContainer">
             <div class = "eventForm">
-                <p>NEW EVENT</p>
+                <p>ADD/EDIT EVENT</p>
                 <?php
                     require_once('addEvent.php');
-                    require_once('updateEvent.php');
                     require_once('deleteEvent.php');
+                    require_once('updateEvent.php');
                 ?>
-                <form method = "POST">
-                    <input type="hidden" name = "eventID" id = "eventID"
-                        value = "<?php require('eventFetcher.php'); echo $eventid?>">
+                <form method = "POST"  class="rfidtxtBox">
                     <div>
+                        <input type="hidden" name = "eventID"
+                            value = "<?php require_once('eventFetcher.php'); echo $eventid;?>">
                         <label for = "eventName">Event Name:</label>
                         <input type = "text" name = "eventName" placeholder = "Event Name" id = "eventName" 
-                            value = "<?php require('eventFetcher.php'); echo $eventname?>" required>
+                            value = "<?php echo $eventname; ?>" required>
                     </div>
                     <div>
                         <label for = "eventDate">Event Date:</label>
-                        <input type = "date" name = "eventDate" id = "eventDate"
-                            value = "<?php require('eventFetcher.php'); echo $eventdate?>" required>
+                        <input type = "date" name = "eventDate" id = "eventDate" 
+                            value = "<?php echo $eventdate; ?>"required>
                     </div>
                     <div>
                         <label for = "eventtimeStart">Event Start:</label>
-                        <input type = "time" name = "eventtimeStart" id = "eventtimeStart"
-                            value = "<?php require('eventFetcher.php'); echo $eventstart?>" required>
+                        <input type = "time" name = "eventtimeStart" id = "eventtimeStart" 
+                            value = "<?php echo $eventstart; ?>" required>
                     </div>
                     <div>
                         <label for = "eventtimeEnd">Event End:</label>
-                        <input type="time" name = "eventtimeEnd" id = "eventtimeEnd"
-                            value = "<?php require('eventFetcher.php'); echo $eventend?>" required>
+                        <input type="time" name = "eventtimeEnd" id = "eventtimeEnd" 
+                            value = "<?php echo $eventend; ?>" required>
                     </div>
                         <input type = "submit" id = "addEvent" name = "addEvent" value = "ADD EVENT">
                         <input type = "submit" id = "updateEvent" name = "updateEvent" value = "UPDATE EVENT">

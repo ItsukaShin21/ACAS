@@ -18,6 +18,7 @@
     <script src = "./script/jqueryscript.js"></script>
     <script src = "./script/sheetjs.js"></script>
     <script src = "./script/script.js"></script>
+    <script src = "./script/export.js"></script>
     <title>ACAS</title>
 </head>
 <body class = "attendanceBody">

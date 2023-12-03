@@ -11,7 +11,7 @@
 
         $result = $connection -> query($sql3);
 
-        while($row = $result->fetch_assoc()) {
+        $row = $result->fetch_assoc();
             $eventid = $row['eventid'];
             $eventname = $row['eventname'];
 
@@ -20,7 +20,7 @@
 
             $connection -> query($sql);
             $connection -> query($sql2);
-        }
-        header("Location: eventPage.php");
+
+            header("Location: eventPage.php");
     }
 ?>

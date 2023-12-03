@@ -7,51 +7,6 @@ $(document).ready(function() {
     $('#rfid').focus();
 })
 
-function exportToExcel(attendanceTable) {
-    // Get the table
-    var table = document.getElementById(attendanceTable);
-
-    // Check if the table exists
-    if (!table) {
-        alert("No records to export.");
-        return;
-    }
-
-    // Get the table data
-    var rows = Array.from(table.rows);
-    var headers = Array.from(rows.shift().cells).map(function(cell) {
-        return cell.innerText;
-    });
-    var data = rows.map(function(row) {
-        return Array.from(row.cells).map(function(cell) {
-            return cell.innerText;
-        });
-    });
-
-    // Group data by program
-    var groupedData = {};
-    data.forEach(function(row) {
-        var program = row[headers.indexOf('Program')];
-        if (!groupedData[program]) {
-            groupedData[program] = [];
-        }
-        groupedData[program].push(row);
-    });
-
-    // Create a new workbook
-    var wb = XLSX.utils.book_new();
-
-    // Create worksheets for each program
-    Object.keys(groupedData).forEach(function(program) {
-        var wsData = [headers].concat(groupedData[program]);
-        var ws = XLSX.utils.aoa_to_sheet(wsData);
-        XLSX.utils.book_append_sheet(wb, ws, program);
-    });
-
-    // Write the workbook to an Excel file
-    XLSX.writeFile(wb, 'attendance.xlsx');
-}
-
 $(document).ready(function() {
     // Iterate over each td element in the table
     $('table td').each(function() {
@@ -115,6 +70,7 @@ $(document).ready(function() {
         }
     });
 });
+
 $(document).ready(function() {
     $('#clearAttendance').on('click', function(event) {
         var confirmation = confirm('Clear all records?');
@@ -137,12 +93,24 @@ $(document).ready(function() {
     });
 });
 
-function hide() {
-    var modal = document.getElementById('modalBg');
-    var overlay = document.querySelector('.overlay');
-    modal.style.display = 'none';
-    overlay.style.display = 'none';
-}
-function show() {
-    
-}
+document.addEventListener('DOMContentLoaded', function () {
+    // Initially disable the delete button if the default option is selected
+    checkEventName();
+
+    // Listen for changes in the eventname select element
+    document.getElementById('eventname').addEventListener('change', function () {
+        checkEventName();
+    });
+
+    function checkEventName() {
+        var eventNameValue = document.getElementById('eventname').value;
+
+        // Enable or disable the delete button based on the selected value
+        var deleteEventButton = document.getElementById('deleteEvent');
+        if (eventNameValue === '') {
+            deleteEventButton.disabled = true;
+        } else {
+            deleteEventButton.disabled = false;
+        }
+    }
+});

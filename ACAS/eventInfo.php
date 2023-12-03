@@ -9,7 +9,7 @@ if(isset($_GET['eventname'])) {
         $event = $row['eventname'];
         $eventstart = date("g:i A", strtotime($row['eventstart'])); // Format to display time with AM/PM
         $eventend = date("g:i A", strtotime($row['eventend'])); // Format to display time with AM/PM
-        $eventdate = $row['eventdate'];
+        $eventdate = date("m-d-Y", strtotime($row['eventdate']));
 
         echo "
             <div class = 'eventInfo'>

@@ -18,7 +18,10 @@
             if ($password === $row['password']) {
                 // Login successful, redirect
                 $_SESSION['rfiduid'] = $rfid;
-                header("Location: eventPage.php");
+                echo "<script>
+                alert('Login Successfully');
+                window.location.href = 'eventPage.php';
+                </script>";
                 exit();
             } else {
                 $errorMessage = "Invalid password";
@@ -48,6 +51,8 @@
                 <?php
                     if (!empty($errorMessage)) {
                         echo '<p style = "font-size: 12px; color: red">' . $errorMessage . '</p>';
+                        $rfid = "";
+                        $password = "";
                     }
                 ?>
                 <form method = "POST">

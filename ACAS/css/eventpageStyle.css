@@ -59,7 +59,7 @@
     border-radius: 20px;
     text-indent: 10px;
 }
-.eventList input {
+.eventList input, .eventList button {
     margin-top: 10%;
     margin-left: 4%;
     height: 35px;
@@ -74,7 +74,7 @@
     width: 90%;
     margin-left: 3.5%;
 }
-.eventList input:hover {
+.eventList input:hover, .eventList button:hover {
     background-color: #241ed3;
 }
 .eventContainer {
@@ -129,7 +129,7 @@
 .eventForm input[type = "time"] {
     text-indent: 5px;
 }
-.eventForm input[type = "submit"] {
+.eventForm input[type = "submit"], .eventForm button {
     margin-top: 5%;
     width: 37%;
     height: 30px;
@@ -138,9 +138,54 @@
     background: rgb(91, 240, 80);
     font-weight: 700;
 }
-.eventForm input[type = "submit"]:nth-child(1) {
+.eventForm input[type = "submit"], .eventForm button {
     margin-right: 5%;
 }
-.eventForm input[type = "submit"]:hover {
+.eventForm input[type = "submit"]:hover, .eventForm button:hover {
     background: rgb(142, 227, 136);
+}
+
+.modalBg {
+    display: none;
+    position: absolute;
+    background: #d9d9d960;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+    margin: -1.7% 0% 0% 0%;
+}
+.modalContainer1, .modalContainer2 {
+    position: absolute;
+    background: #ffffff;
+    width: 30%;
+    height: 25%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    border: 3px solid #070366 ;
+    border-radius: 20px;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.modalContainer1 p, .modalContainer2 p {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5%;
+}
+.modalContainer1 button, .modalContainer2 button {
+    width: 30%;
+    height: 30px;
+    border: none;
+    border-radius: 20px;
+    background: rgb(91, 240, 80);
+    font-weight: bold;
+}
+.modalContainer1 button:hover, .modalContainer2 button:hover {
+    background: rgb(142, 227, 136);
+}
+.editModal {
+    display: none;
+    border: 3px solid #070366;
 }
